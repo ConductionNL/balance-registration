@@ -24,8 +24,8 @@ class PaymentRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->andWhere('p.acount = :acount')
             ->setParameter('acount', $acount)
-            ->select('SUM(p.debit) as debit, SUM(p.credit) as credit, (debit - credit) as balance')
+            ->select('(SUM(p.debit) - SUM(p.credit)) as credit')
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getSingleScalarResult();
     }
 }
