@@ -4,17 +4,17 @@
 
 settings:
   registryBase: docker.io/conduction
-  projectName: pc
-  name: pc
-  title: Proto component commonground
+  projectName: bare
+  name: bare
+  title: Balance Registration
   version: V1.0
   majorVersion: v1
   id: 
-  description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
+  description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
   type: component
-  repro: https://github.com/ConductionNL/proto-component
+  repro: https://github.com/ConductionNL/balance-registration
   demo: pc.zaakonline.nl
-  container: https://hub.docker.com/repository/docker/conduction/pc-php
+  container: https://hub.docker.com/repository/docker/conduction/bare-php
   domain: conduction.nl
   subdomain: pc
   subpath: pc
