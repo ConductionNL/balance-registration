@@ -3,6 +3,11 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\PaymentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -13,10 +18,45 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use DateTime;
 
 /**
- * Paymments reprecent iether incommong or outgooing transfers of money to and from an acount
+ * Paymments reprecent iether incomming or outgooing transfers of money to and from an acount
  *
- * @ApiResource()
+ * @ApiResource(
+ *     attributes={"order"={"dateCreated": "ASC"}},
+ *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
+ *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true},
+ *     itemOperations={
+ *          "get",
+ *          "put",
+ *          "delete",
+ *          "get_change_logs"={
+ *              "path"="/requests/{id}/change_log",
+ *              "method"="get",
+ *              "swagger_context" = {
+ *                  "summary"="Changelogs",
+ *                  "description"="Gets al the change logs for this resource"
+ *              }
+ *          },
+ *          "get_audit_trail"={
+ *              "path"="/requests/{id}/audit_trail",
+ *              "method"="get",
+ *              "swagger_context" = {
+ *                  "summary"="Audittrail",
+ *                  "description"="Gets the audit trail for this resource"
+ *              }
+ *          }
+ *     },
+ * )
+ * @Gedmo\Loggable(logEntryClass="Conduction\CommonGroundBundle\Entity\ChangeLog")
  * @ORM\Entity(repositoryClass=PaymentRepository::class)
+ * @ApiFilter(BooleanFilter::class)
+ * @ApiFilter(OrderFilter::class)
+ * @ApiFilter(DateFilter::class, strategy=DateFilter::EXCLUDE_NULL)
+ * @ApiFilter(SearchFilter::class, properties={
+ *     "acount.id": "exact",
+ *     "acount.resource": "partial",
+ *     "name": "partial",
+ *     "description": "partial"
+ * })
  */
 class Payment
 {
@@ -36,7 +76,7 @@ class Payment
 
     /**
      * @Groups({"read", "write"})
-     * @ORM\ManyToOne(targetEntity=Acount::class, inversedBy="payments")
+     * @ORM\ManyToOne(targetEntity=Acount::class, inversedBy="payments", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $acount;

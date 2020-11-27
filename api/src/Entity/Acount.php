@@ -3,6 +3,12 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\AcountRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -16,7 +22,34 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use DateTime;
 
 /**
- * @ApiResource
+ * An acount e.g. bank acount that holds payments and provides a balance
+ *
+ * @ApiResource(
+ *     attributes={"order"={"dateCreated": "ASC"}},
+ *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
+ *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true},
+ *     itemOperations={
+ *          "get",
+ *          "put",
+ *          "delete",
+ *          "get_change_logs"={
+ *              "path"="/acounts/{id}/change_log",
+ *              "method"="get",
+ *              "swagger_context" = {
+ *                  "summary"="Changelogs",
+ *                  "description"="Gets al the change logs for this resource"
+ *              }
+ *          },
+ *          "get_audit_trail"={
+ *              "path"="/acounts/{id}/audit_trail",
+ *              "method"="get",
+ *              "swagger_context" = {
+ *                  "summary"="Audittrail",
+ *                  "description"="Gets the audit trail for this resource"
+ *              }
+ *          }
+ *     },
+ * )
  * @ORM\Table(
  *    uniqueConstraints={
  *        @UniqueConstraint(name="reference_unique",
@@ -24,7 +57,17 @@ use DateTime;
  *        )
  *    }
  * )
+ * @Gedmo\Loggable(logEntryClass="Conduction\CommonGroundBundle\Entity\ChangeLog")
  * @ORM\Entity(repositoryClass=AcountRepository::class)
+ * @ApiFilter(BooleanFilter::class)
+ * @ApiFilter(OrderFilter::class)
+ * @ApiFilter(DateFilter::class, strategy=DateFilter::EXCLUDE_NULL)
+ * @ApiFilter(SearchFilter::class, properties={
+ *     "reference": "exact",
+ *     "resource": "partial",
+ *     "name": "partial",
+ *     "description": "partial"
+ * })
  */
 class Acount
 {
@@ -84,7 +127,7 @@ class Acount
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private string $name;
+    private ?string $name;
 
     /**
      * @var string The description of this Course.
@@ -125,6 +168,7 @@ class Acount
 
     /**
      * @ORM\OneToMany(targetEntity=Payment::class, mappedBy="acount", orphanRemoval=true)
+     * @ApiSubresource
      */
     private $payments;
 
