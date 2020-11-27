@@ -22,10 +22,11 @@ class PaymentRepository extends ServiceEntityRepository
     public function calculateAcountBalance($acount)
     {
         return $this->createQueryBuilder('p')
+            ->select('(SUM(p.debit) - SUM(p.credit)) as credit')
             ->andWhere('p.acount = :acount')
             ->setParameter('acount', $acount)
-            ->select('(SUM(p.debit) - SUM(p.credit)) as credit')
             ->getQuery()
             ->getSingleScalarResult();
     }
+
 }

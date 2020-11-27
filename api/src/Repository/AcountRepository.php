@@ -36,7 +36,6 @@ class AcountRepository extends ServiceEntityRepository
     }
     */
 
-    /*
     public function findOneBySomeField($value): ?Acount
     {
         return $this->createQueryBuilder('a')
@@ -46,5 +45,4 @@ class AcountRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-    */
 }
