@@ -15,6 +15,737 @@ info:
     Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.         
     
 paths:
+  /acounts:
+    get:
+      tags:
+        - Acount
+      operationId: getAcountCollection
+      summary: 'Retrieves the collection of Acount resources.'
+      responses:
+        200:
+          description: 'Acount collection response'
+          content:
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Acount:jsonld' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+            application/json+ld:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Acount:jsonld' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Acount'
+            application/json+hal:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Acount'
+            application/vnd.api+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Acount'
+            application/json+vnd.api:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Acount'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Acount'
+            application/health+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Acount'
+            application/json+health:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Acount'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Acount'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Acount'
+            text/csv:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Acount'
+            text/html:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Acount'
+      parameters:
+        -
+          name: page
+          in: query
+          required: false
+          description: 'The collection page number'
+          schema:
+            type: integer
+            default: 1
+        -
+          name: limit
+          in: query
+          required: false
+          description: 'The number of items per page'
+          schema:
+            type: integer
+            default: 30
+            minimum: 0
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      produces:
+        - application/health+json
+    post:
+      tags:
+        - Acount
+      operationId: postAcountCollection
+      summary: 'Creates a Acount resource.'
+      responses:
+        201:
+          description: 'Acount resource created'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Acount:jsonld'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Acount:jsonld'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Acount'
+          links:
+            GetAcountItem:
+              parameters:
+                id: '$response.body#/id'
+              operationId: getAcountItem
+              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /acounts/{id}`.'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Acount:jsonld'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/Acount:jsonld'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/json+health:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Acount'
+        description: 'The new Acount resource'
+      parameters:
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+  '/acounts/{id}':
+    get:
+      tags:
+        - Acount
+      operationId: getAcountItem
+      summary: 'Retrieves a Acount resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      responses:
+        200:
+          description: 'Acount resource response'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Acount:jsonld'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Acount:jsonld'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Acount'
+        404:
+          description: 'Resource not found'
+      produces:
+        - application/health+json
+    delete:
+      tags:
+        - Acount
+      operationId: deleteAcountItem
+      summary: 'Removes the Acount resource.'
+      responses:
+        204:
+          description: 'Acount resource deleted'
+        404:
+          description: 'Resource not found'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+    put:
+      tags:
+        - Acount
+      operationId: putAcountItem
+      summary: 'Replaces the Acount resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'Acount resource updated'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Acount:jsonld'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Acount:jsonld'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Acount'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Acount:jsonld'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/Acount:jsonld'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/json+health:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Acount'
+        description: 'The updated Acount resource'
+    patch:
+      tags:
+        - Acount
+      operationId: patchAcountItem
+      summary: 'Updates the Acount resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'Acount resource updated'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Acount:jsonld'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Acount:jsonld'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Acount'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Acount'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Acount:jsonld'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          applications/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Acount'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Acount'
+        description: 'The updated Acount resource'
   /audit_trails:
     get:
       tags:
@@ -1942,8 +2673,856 @@ paths:
             schema:
               $ref: '#/components/schemas/ChangeLog-write'
         description: 'The updated ChangeLog resource'
+  /payments:
+    get:
+      tags:
+        - Payment
+      operationId: getPaymentCollection
+      summary: 'Retrieves the collection of Payment resources.'
+      responses:
+        200:
+          description: 'Payment collection response'
+          content:
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Payment:jsonld' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+            application/json+ld:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Payment:jsonld' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+            application/json+hal:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+            application/vnd.api+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+            application/json+vnd.api:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+            application/health+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+            application/json+health:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+            text/csv:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+            text/html:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+      parameters:
+        -
+          name: page
+          in: query
+          required: false
+          description: 'The collection page number'
+          schema:
+            type: integer
+            default: 1
+        -
+          name: limit
+          in: query
+          required: false
+          description: 'The number of items per page'
+          schema:
+            type: integer
+            default: 30
+            minimum: 0
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      produces:
+        - application/health+json
+    post:
+      tags:
+        - Payment
+      operationId: postPaymentCollection
+      summary: 'Creates a Payment resource.'
+      responses:
+        201:
+          description: 'Payment resource created'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Payment:jsonld'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Payment:jsonld'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          links:
+            GetPaymentItem:
+              parameters:
+                id: '$response.body#/id'
+              operationId: getPaymentItem
+              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /payments/{id}`.'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Payment:jsonld'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/Payment:jsonld'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/json+health:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Payment'
+        description: 'The new Payment resource'
+      parameters:
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+  '/payments/{id}':
+    get:
+      tags:
+        - Payment
+      operationId: getPaymentItem
+      summary: 'Retrieves a Payment resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      responses:
+        200:
+          description: 'Payment resource response'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Payment:jsonld'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Payment:jsonld'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        404:
+          description: 'Resource not found'
+      produces:
+        - application/health+json
+    delete:
+      tags:
+        - Payment
+      operationId: deletePaymentItem
+      summary: 'Removes the Payment resource.'
+      responses:
+        204:
+          description: 'Payment resource deleted'
+        404:
+          description: 'Resource not found'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+    put:
+      tags:
+        - Payment
+      operationId: putPaymentItem
+      summary: 'Replaces the Payment resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'Payment resource updated'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Payment:jsonld'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Payment:jsonld'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Payment:jsonld'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/Payment:jsonld'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/json+health:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Payment'
+        description: 'The updated Payment resource'
+    patch:
+      tags:
+        - Payment
+      operationId: patchPaymentItem
+      summary: 'Updates the Payment resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'Payment resource updated'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Payment:jsonld'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Payment:jsonld'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Payment'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Payment:jsonld'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          applications/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Payment'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Payment'
+        description: 'The updated Payment resource'
 components:
   schemas:
+    Acount:
+      type: object
+      description: ''
+      properties:
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this resource'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+          format: uuid
+        resource:
+          description: 'The uri of the submitter (organization)'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        reference:
+          description: 'A resource unique reference for this acount'
+          type: string
+        name:
+          description: 'The name of this Course.'
+          type: string
+          nullable: true
+        description:
+          description: 'The description of this Course.'
+          type: string
+          nullable: true
+        currency:
+          description: 'A valid 3-letter ISO 4217 currency for this acount, an acount can only have one currency'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        balance:
+          description: 'the current balance of this acount as an integer e.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points'
+          type: integer
+        payments:
+          type: array
+          items:
+            type: string
+            format: iri-reference
+        dateCreated:
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+          nullable: true
+        dateModified:
+          description: 'The moment this request was modified by the submitter'
+          type: string
+          format: date-time
+          nullable: true
+      required:
+        - resource
+        - reference
+        - name
+    'Acount:jsonld':
+      type: object
+      description: ''
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this resource'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+          format: uuid
+        resource:
+          description: 'The uri of the submitter (organization)'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        reference:
+          description: 'A resource unique reference for this acount'
+          type: string
+        name:
+          description: 'The name of this Course.'
+          type: string
+          nullable: true
+        description:
+          description: 'The description of this Course.'
+          type: string
+          nullable: true
+        currency:
+          description: 'A valid 3-letter ISO 4217 currency for this acount, an acount can only have one currency'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        balance:
+          description: 'the current balance of this acount as an integer e.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points'
+          type: integer
+        payments:
+          type: array
+          items:
+            type: string
+            format: iri-reference
+        dateCreated:
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+          nullable: true
+        dateModified:
+          description: 'The moment this request was modified by the submitter'
+          type: string
+          format: date-time
+          nullable: true
+      required:
+        - resource
+        - reference
+        - name
     AuditTrail-read:
       type: object
       description: 'An resource representing a log line.'
@@ -2334,7 +3913,258 @@ components:
         '@type':
           readOnly: true
           type: string
+    Payment:
+      type: object
+      description: 'Paymments reprecent iether incommong or outgooing transfers of money to and from an acount'
+      properties:
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this resource'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+          format: uuid
+        acount:
+          type: string
+          format: iri-reference
+        resource:
+          description: 'The uri of a commonground object attached to this payment'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
+        name:
+          description: 'The name of this Course.'
+          type: string
+        description:
+          description: 'The description of this Course.'
+          type: string
+          nullable: true
+        debit:
+          description: 'money added to the acount as an integer e.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points'
+          type: integer
+          nullable: true
+        credit:
+          description: 'money subtrated from the acount as an integere.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points'
+          type: integer
+          nullable: true
+        dateCreated:
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+          nullable: true
+        dateModified:
+          description: 'The moment this request was modified by the submitter'
+          type: string
+          format: date-time
+          nullable: true
+      required:
+        - name
+    'Payment:jsonld':
+      type: object
+      description: 'Paymments reprecent iether incommong or outgooing transfers of money to and from an acount'
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this resource'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+          format: uuid
+        acount:
+          type: string
+          format: iri-reference
+        resource:
+          description: 'The uri of a commonground object attached to this payment'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
+        name:
+          description: 'The name of this Course.'
+          type: string
+        description:
+          description: 'The description of this Course.'
+          type: string
+          nullable: true
+        debit:
+          description: 'money added to the acount as an integer e.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points'
+          type: integer
+          nullable: true
+        credit:
+          description: 'money subtrated from the acount as an integere.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points'
+          type: integer
+          nullable: true
+        dateCreated:
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+          nullable: true
+        dateModified:
+          description: 'The moment this request was modified by the submitter'
+          type: string
+          format: date-time
+          nullable: true
+      required:
+        - name
 definitions:
+  Acount-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this resource'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      resource:
+        description: 'The uri of the submitter (organization)'
+        type: string
+        example: 'https://dev.zuid-drecht.nl/api/v1/wrc/organizations/c571bdad-f34c-4e24-94e7-74629cfaccc9'
+        format: url
+        maxLength: 255
+      reference:
+        description: 'A resource unique reference for this acount'
+        type: string
+        example: '2004'
+        maxLength: 255
+      name:
+        description: 'The name of this Course.'
+        type: string
+        example: 'Werken met scrum en Github'
+        maxLength: 255
+      description:
+        description: 'The description of this Course.'
+        type: string
+        example: 'Deze cursus leert je de basics van werken met scrum en Github.'
+        maxLength: 255
+      currency:
+        description: 'A valid 3-letter ISO 4217 currency for this acount, an acount can only have one currency'
+        type: string
+        example: EUR
+        maxLength: 3
+      balance:
+        description: 'the current balance of this acount as an integer e.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points'
+        type: int
+        example: '100'
+      dateCreated:
+        description: 'The moment this request was created by the submitter'
+        type: \DateTime
+      dateModified:
+        description: 'The moment this request was modified by the submitter'
+        type: \DateTime
+    required:
+      - resource
+      - reference
+      - name
+  Acount-write:
+    properties:
+      resource:
+        description: 'The uri of the submitter (organization)'
+        type: string
+        example: 'https://dev.zuid-drecht.nl/api/v1/wrc/organizations/c571bdad-f34c-4e24-94e7-74629cfaccc9'
+        format: url
+        maxLength: 255
+      reference:
+        description: 'A resource unique reference for this acount'
+        type: string
+        example: '2004'
+        maxLength: 255
+      name:
+        description: 'The name of this Course.'
+        type: string
+        example: 'Werken met scrum en Github'
+        maxLength: 255
+      description:
+        description: 'The description of this Course.'
+        type: string
+        example: 'Deze cursus leert je de basics van werken met scrum en Github.'
+        maxLength: 255
+      currency:
+        description: 'A valid 3-letter ISO 4217 currency for this acount, an acount can only have one currency'
+        type: string
+        example: EUR
+        maxLength: 3
+    required:
+      - resource
+      - reference
+      - name
+  Payment-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this resource'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      resource:
+        description: 'The uri of a commonground object attached to this payment'
+        type: string
+        example: 'https://dev.zuid-drecht.nl/api/v1/bs/invoices/c571bdad-f34c-4e24-94e7-74629cfaccc9'
+        format: url
+        maxLength: 255
+      name:
+        description: 'The name of this Course.'
+        type: string
+        example: 'Werken met scrum en Github'
+        maxLength: 255
+      description:
+        description: 'The description of this Course.'
+        type: string
+        example: 'Deze cursus leert je de basics van werken met scrum en Github.'
+        maxLength: 255
+      debit:
+        description: 'money added to the acount as an integer e.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points'
+        type: int
+        example: '100'
+      credit:
+        description: 'money subtrated from the acount as an integere.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points'
+        type: int
+        example: '100'
+      dateCreated:
+        description: 'The moment this request was created by the submitter'
+        type: \DateTime
+      dateModified:
+        description: 'The moment this request was modified by the submitter'
+        type: \DateTime
+      acount: []
+    required:
+      - name
+  Payment-write:
+    properties:
+      resource:
+        description: 'The uri of a commonground object attached to this payment'
+        type: string
+        example: 'https://dev.zuid-drecht.nl/api/v1/bs/invoices/c571bdad-f34c-4e24-94e7-74629cfaccc9'
+        format: url
+        maxLength: 255
+      name:
+        description: 'The name of this Course.'
+        type: string
+        example: 'Werken met scrum en Github'
+        maxLength: 255
+      description:
+        description: 'The description of this Course.'
+        type: string
+        example: 'Deze cursus leert je de basics van werken met scrum en Github.'
+        maxLength: 255
+      debit:
+        description: 'money added to the acount as an integer e.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points'
+        type: int
+        example: '100'
+      credit:
+        description: 'money subtrated from the acount as an integere.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points'
+        type: int
+        example: '100'
+      acount: []
+    required:
+      - name
   AuditTrail-read:
     properties:
       id:
@@ -2439,12 +4269,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-11-26 19:08:13'
+        example: '2020-11-27 05:53:13'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-11-26 19:08:13'
+        example: '2020-11-27 05:53:13'
     required: []
   AuditTrail-write:
     properties:
@@ -2492,12 +4322,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-11-26 19:08:13'
+        example: '2020-11-27 05:53:13'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-11-26 19:08:13'
+        example: '2020-11-27 05:53:13'
     required: []
   ChangeLog-write:
     properties:
@@ -2508,6 +4338,18 @@ definitions:
         maxLength: 2555
     required: []
 tags:
+  -
+    name: Acount
+    description: |
+      
+      
+      
+  -
+    name: Payment
+    description: |
+      Paymments reprecent iether incommong or outgooing transfers of money to and from an acount
+      
+      
   -
     name: AuditTrail
     description: |

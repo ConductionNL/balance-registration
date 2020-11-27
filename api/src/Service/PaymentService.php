@@ -7,15 +7,24 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class PaymentService
 {
-    public function calculateAcountBalance(Payment $payment, EntityManagerInterface $em)
-    {
-        $acount = $payment->getAcount();
-        $balance = $em->getRepository('AppBundle:Payment')
-            ->calculateAcountBalance($acount);
-        $acount->setBelance($balance);
+    private $em;
 
-        $em->persist($acount);
-        $em->flush();
+    public function __construct( EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    public function calculateAcountBalance(Payment $payment)
+    {
+
+        $acount = $payment->getAcount();
+        $balance =  $this->em->getRepository('App:Payment')
+            ->calculateAcountBalance($acount);
+
+        $acount->setBalance($balance);
+
+        $this->em->persist($acount);
+        $this->em->flush();
 
         return $payment;
     }

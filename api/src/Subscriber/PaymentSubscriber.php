@@ -2,14 +2,16 @@
 
 namespace App\Subscriber;
 
+use ApiPlatform\Core\EventListener\EventPriorities;
+use App\Entity\Acount;
 use App\Entity\Payment;
 use App\Service\PaymentService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Events;
-use Doctrine\Persistence\Event\LifecycleEventArgs;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 
-class PaymentSubscriber implements EventSubscriber
+class PaymentSubscriber implements EventSubscriberInterface
 {
     private $paymentService;
 
@@ -18,25 +20,69 @@ class PaymentSubscriber implements EventSubscriber
         $this->paymentService = $paymentService;
     }
 
-    public function getSubscribedEvents(): array
+    public static function getSubscribedEvents()
     {
         return [
-            Events::postPersist => 'calculate',
-            Events::postRemove => 'calculate',
-            Events::postUpdate => 'calculate',
+            KernelEvents::VIEW => ['checkAcount', EventPriorities::POST_READ],
+            KernelEvents::VIEW => ['calculateAcount', EventPriorities::POST_WRITE],
         ];
     }
 
-    public function calculate(string $action, LifecycleEventArgs $args): void
+    /*
+     * This function hooks into the payment validition to make sure an payment acount is an acount
+     *
+     * It therby provides functionality for matching and creating acounts on the fly
+     *
+     * @parameter $event ViewEvent
+     * @return Payment
+     *
+     */
+    public function checkAcount(ViewEvent $event)
     {
-        $payment = $args->getObject();
+        $payment = $event->getControllerResult();
+        $method = $event->getRequest()->getMethod();
 
-        // if this subscriber only applies to certain entity types,
-        // add some code to check the entity type as early as possible
-        if (!$payment instanceof Payment) {
+        if (!$payment instanceof Payment || $method != 'POST'  ) { //|| !$payment->getAcount()
+            return;
+        }
+
+        // Lets see if the acount is an acount
+        if (!$payment->getAcount() instanceof Acount) {
+
+            // OKe lets see if we can finde the acoutnt
+            $acount = $this->em->getRepository('App:Acount')->findOneByResource($payment->getAcount());
+
+            // If no acount can be found lets make one
+            if(!$acount){
+                $acount = New Acount();
+                $acount->setResource($payment->getAcount());
+            }
+
+            $payment->setAcount($acount);
+        }
+
+        return $payment;
+    }
+
+    /*
+     * This function calculates the new acount total afhter a payment has been added
+     *
+     * @parameter $event ViewEvent
+     * @return Payment
+     *
+     */
+    public function calculateAcount(ViewEvent $event)
+    {
+
+        $payment = $event->getControllerResult();
+        $method = $event->getRequest()->getMethod();
+
+        if (!$payment instanceof Payment ) {
             return;
         }
 
         $this->paymentService->calculateAcountBalance($payment);
+
+        return $payment;
     }
 }

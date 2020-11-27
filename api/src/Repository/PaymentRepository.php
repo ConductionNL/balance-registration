@@ -21,12 +21,19 @@ class PaymentRepository extends ServiceEntityRepository
 
     public function calculateAcountBalance($acount)
     {
-        return $this->createQueryBuilder('p')
-            ->select('(SUM(p.debit) - SUM(p.credit)) as credit')
+        $totals = $this->createQueryBuilder('p')
+            //->select('(SUM(p.debit) - SUM(p.credit)) as credit')
+            ->select('SUM(p.debit) as debit, SUM(p.credit) as credit')
             ->andWhere('p.acount = :acount')
             ->setParameter('acount', $acount)
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getOneOrNullResult();
+
+        // The sums might be null if there are no payments, that will create trouble later on
+        if(!$totals['debit']){$totals['debit'] = 0;}
+        if(!$totals['credit']){$totals['credit'] = 0;}
+
+        return $totals['debit'] - $totals['credit'];
     }
 
 }

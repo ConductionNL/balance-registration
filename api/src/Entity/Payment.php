@@ -6,9 +6,11 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PaymentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+use DateTime;
 
 /**
  * Paymments reprecent iether incommong or outgooing transfers of money to and from an acount
@@ -118,7 +120,7 @@ class Payment
      */
     private $dateModified;
 
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
@@ -195,24 +197,24 @@ class Payment
         return $this;
     }
 
-    public function getDateCreated(): ?DateTimeInterface
+    public function getDateCreated(): ?DateTime
     {
         return $this->dateCreated;
     }
 
-    public function setDateCreated(DateTimeInterface $dateCreated): self
+    public function setDateCreated(DateTime $dateCreated): self
     {
         $this->dateCreated = $dateCreated;
 
         return $this;
     }
 
-    public function getDateModified(): ?DateTimeInterface
+    public function getDateModified(): ?DateTime
     {
         return $this->dateModified;
     }
 
-    public function setDateModified(DateTimeInterface $dateModified): self
+    public function setDateModified(DateTime $dateModified): self
     {
         $this->dateModified = $dateModified;
 
