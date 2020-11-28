@@ -72,7 +72,7 @@ class Payment
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
-    private $id;
+    private  $id;
 
     /**
      * @Groups({"read", "write"})
@@ -93,7 +93,7 @@ class Payment
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $resource;
+    private  $resource;
 
     /**
      * @var string The name of this Course.
@@ -107,7 +107,7 @@ class Payment
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
-    private string $name;
+    private  $name;
 
     /**
      * @var string The description of this Course.
@@ -120,7 +120,7 @@ class Payment
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private ?string $description;
+    private  $description;
 
     /**
      * @var integer money added to the acount as an integer e.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points
@@ -143,7 +143,7 @@ class Payment
     private $credit;
 
     /**
-     * @var DateTime The moment this request was created by the submitter
+     * @var  The moment this request was created by the submitter
      *
      * @Groups({"read"})
      * @Gedmo\Timestampable(on="create")
@@ -152,13 +152,13 @@ class Payment
     private $dateCreated;
 
     /**
-     * @var DateTime The moment this request was modified by the submitter
+     * @var  The moment this request was modified by the submitter
      *
      * @Groups({"read"})
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateModified;
+    private  $dateModified;
 
     public function getId(): ?Uuid
     {
