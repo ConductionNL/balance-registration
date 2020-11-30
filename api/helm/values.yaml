@@ -10,14 +10,14 @@ settings:
   version: V1.0
   majorVersion: v1
   id: 
-  description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
+  description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   type: component
   repro: https://github.com/ConductionNL/balance-registration
   demo: pc.zaakonline.nl
   container: https://hub.docker.com/repository/docker/conduction/bare-php
   domain: conduction.nl
-  subdomain: pc
-  subpath: pc
+  subdomain: bare
+  subpath: bare
   subpathRouting: true
   organisationName: Conduction
   email: info@conduction.nl

@@ -12,7 +12,7 @@ info:
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/bare-php) 
     - Datamodel: [postman](/schema/bare.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) 
     
-    Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.         
+    'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
     
 paths:
   /acounts:
@@ -4974,12 +4974,12 @@ components:
           type: integer
           nullable: true
         dateCreated:
-          description: 'The moment this request was created by the submitter'
+          description: 'moment this request was created by the submitter'
           type: string
           format: date-time
           nullable: true
         dateModified:
-          description: 'The moment this request was modified by the submitter'
+          description: 'moment this request was modified by the submitter'
           type: string
           format: date-time
           nullable: true
@@ -5058,12 +5058,12 @@ components:
           type: integer
           nullable: true
         dateCreated:
-          description: 'The moment this request was created by the submitter'
+          description: 'moment this request was created by the submitter'
           type: string
           format: date-time
           nullable: true
         dateModified:
-          description: 'The moment this request was modified by the submitter'
+          description: 'moment this request was modified by the submitter'
           type: string
           format: date-time
           nullable: true
@@ -5227,11 +5227,11 @@ definitions:
         type: int
         example: '100'
       dateCreated:
-        description: 'The moment this request was created by the submitter'
-        type: \DateTime
+        description: 'moment this request was created by the submitter'
+        type: \The
       dateModified:
-        description: 'The moment this request was modified by the submitter'
-        type: \DateTime
+        description: 'moment this request was modified by the submitter'
+        type: \The
       acount: []
     required:
       - name
@@ -5368,12 +5368,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-11-28 05:53:32'
+        example: '2020-11-30 08:27:22'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-11-28 05:53:32'
+        example: '2020-11-30 08:27:22'
     required: []
   AuditTrail-write:
     properties:
@@ -5421,12 +5421,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-11-28 05:53:32'
+        example: '2020-11-30 08:27:22'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-11-28 05:53:32'
+        example: '2020-11-30 08:27:22'
     required: []
   ChangeLog-write:
     properties:
