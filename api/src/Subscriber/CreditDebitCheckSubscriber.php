@@ -3,17 +3,14 @@
 namespace App\Subscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
-use App\Entity\Acount;
 use App\Entity\Payment;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 class CreditDebitCheckSubscriber implements EventSubscriberInterface
 {
-
     public static function getSubscribedEvents()
     {
         return [
@@ -34,8 +31,7 @@ class CreditDebitCheckSubscriber implements EventSubscriberInterface
         $payment = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-
-        if (!$payment instanceof Payment || !$payment->getCredit() || !$payment->getDebit() ) {
+        if (!$payment instanceof Payment || !$payment->getCredit() || !$payment->getDebit()) {
             return;
         }
 
@@ -44,5 +40,4 @@ class CreditDebitCheckSubscriber implements EventSubscriberInterface
 
         return $event;
     }
-
 }
