@@ -174,7 +174,7 @@ class Acount
      * @Groups({"read", "write"})
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $creditLimit;
+    private $creditLimit = 0;
 
     /**
      * @ORM\OneToMany(targetEntity=Payment::class, mappedBy="acount", orphanRemoval=true)

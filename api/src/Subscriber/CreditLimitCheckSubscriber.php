@@ -35,13 +35,13 @@ class CreditLimitCheckSubscriber implements EventSubscriberInterface
         $method = $event->getRequest()->getMethod();
 
 
-        if (!$payment instanceof Payment || $method != 'POST' || !$payment->getCredit() || !$payment->getAcount()->getCreditLimit()) {
+        if (!$payment instanceof Payment || $method != 'POST' || !$payment->getDebit() || !$payment->getAcount()->getCreditLimit()) {
             return;
         }
 
 
         // Lets see if we pass the credit limit
-        $newBalance = $payment->getAcount()->getBalance() - $payment->getCredit();
+        $newBalance = $payment->getAcount()->getBalance() - $payment->getDebit();
         if(abs($newBalance) > $payment->getAcount()->getCreditLimit()){
             throw new BadRequestHttpException('This acount has insufficient credit limit to handle this request');
         }

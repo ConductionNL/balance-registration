@@ -33,7 +33,7 @@ class PaymentRepository extends ServiceEntityRepository
         if(!$totals['debit']){$totals['debit'] = 0;}
         if(!$totals['credit']){$totals['credit'] = 0;}
 
-        return $totals['debit'] - $totals['credit'];
+        return $totals['credit'] - $totals['debit'];
     }
 
 }
