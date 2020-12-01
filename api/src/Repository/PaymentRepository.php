@@ -30,10 +30,13 @@ class PaymentRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
 
         // The sums might be null if there are no payments, that will create trouble later on
-        if(!$totals['debit']){$totals['debit'] = 0;}
-        if(!$totals['credit']){$totals['credit'] = 0;}
+        if (!$totals['debit']) {
+            $totals['debit'] = 0;
+        }
+        if (!$totals['credit']) {
+            $totals['credit'] = 0;
+        }
 
         return $totals['credit'] - $totals['debit'];
     }
-
 }
