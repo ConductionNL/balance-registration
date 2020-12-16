@@ -10,11 +10,10 @@ class PaymentService
 {
     private $em;
 
-    public function __construct( EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
-
 
     /*
      * This updates the balance of an acount that us atached to a payment and is used to recalcualte the balance afther a payment has been made
@@ -24,9 +23,8 @@ class PaymentService
      */
     public function calculateAcountBalance(Payment $payment)
     {
-
         $acount = $payment->getAcount();
-        $balance =  $this->em->getRepository('App:Payment')
+        $balance = $this->em->getRepository('App:Payment')
             ->calculateAcountBalance($acount);
 
         $acount->setBalance($balance);
@@ -53,8 +51,8 @@ class PaymentService
             $acount = $this->em->getRepository('App:Acount')->findOneByResource($payment->getResource());
 
             // If no acount can be found lets make one
-            if(!$acount){
-                $acount = New Acount();
+            if (!$acount) {
+                $acount = new Acount();
                 $acount->setResource($payment->getResource());
                 $acount->setReference('primary');
             }

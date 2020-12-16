@@ -2,28 +2,28 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
-use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\AcountRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use Gedmo\Mapping\Annotation as Gedmo;
 use phpDocumentor\Reflection\Types\Integer;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
-use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\ORM\Mapping\UniqueConstraint;
 use Symfony\Component\Serializer\Annotation\Groups;
-use DateTime;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * An acount e.g. bank acount that holds payments and provides a balance
+ * An acount e.g. bank acount that holds payments and provides a balance.
  *
  * @ApiResource(
  *     attributes={"order"={"dateCreated": "ASC"}},
@@ -84,13 +84,13 @@ class Acount
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
-    private  $id;
+    private $id;
 
     /**
      * @var string The uri of the submitter (organization)
      *
      * @example https://dev.zuid-drecht.nl/api/v1/wrc/organizations/c571bdad-f34c-4e24-94e7-74629cfaccc9
-
+     *
      * @Assert\Url()
      * @Assert\NotNull
      * @Assert\Length(
@@ -99,7 +99,7 @@ class Acount
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
-    private  $resource;
+    private $resource;
 
     /**
      * @var string A resource unique reference for this acount
@@ -113,7 +113,7 @@ class Acount
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
-    private  $reference;
+    private $reference;
 
     /**
      * @var string The name of this Course.
@@ -127,7 +127,7 @@ class Acount
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private  $name;
+    private $name;
 
     /**
      * @var string The description of this Course.
@@ -140,7 +140,7 @@ class Acount
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private  $description;
+    private $description;
 
     /**
      * @var string A valid 3-letter ISO 4217 currency for this acount, an acount can only have one currency
@@ -154,10 +154,10 @@ class Acount
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=3)
      */
-    private  $currency = 'EUR';
+    private $currency = 'EUR';
 
     /**
-     * @var integer the current balance of this acount as an integer e.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points
+     * @var int the current balance of this acount as an integer e.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points
      *
      * @example 100
      *
@@ -167,14 +167,14 @@ class Acount
     private $balance = 0;
 
     /**
-     * @var integer the credit limit of this acounts line of credit as an integer, if set prefends the acount from going "below" this limit
+     * @var int the credit limit of this acounts line of credit as an integer, if set prefends the acount from going "below" this limit
      *
      * @example 100
      *
      * @Groups({"read", "write"})
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $creditLimit;
+    private $creditLimit = 0;
 
     /**
      * @ORM\OneToMany(targetEntity=Payment::class, mappedBy="acount", orphanRemoval=true)
@@ -189,7 +189,7 @@ class Acount
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private  $dateCreated;
+    private $dateCreated;
 
     /**
      * @var DateTime The moment this request was modified by the submitter
@@ -198,7 +198,7 @@ class Acount
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private  $dateModified;
+    private $dateModified;
 
     public function __construct()
     {

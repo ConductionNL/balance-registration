@@ -7,7 +7,6 @@ use App\Entity\Acount;
 use App\Entity\Payment;
 use App\Service\PaymentService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -36,11 +35,10 @@ class CalculateBalanceSubscriber implements EventSubscriberInterface
      */
     public function calculateAcount(ViewEvent $event)
     {
-
         $payment = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        if (!$payment instanceof Payment ) {
+        if (!$payment instanceof Payment) {
             return;
         }
 

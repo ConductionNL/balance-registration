@@ -2,23 +2,23 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\PaymentRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
-use DateTime;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Paymments reprecent iether incomming or outgooing transfers of money to and from an acount
+ * Paymments reprecent iether incomming or outgooing transfers of money to and from an acount.
  *
  * @ApiResource(
  *     attributes={"order"={"dateCreated": "ASC"}},
@@ -72,7 +72,7 @@ class Payment
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
-    private  $id;
+    private $id;
 
     /**
      * @Groups({"read", "write"})
@@ -85,7 +85,7 @@ class Payment
      * @var string The uri of a commonground object attached to this payment
      *
      * @example https://dev.zuid-drecht.nl/api/v1/bs/invoices/c571bdad-f34c-4e24-94e7-74629cfaccc9
-
+     *
      * @Assert\Url()
      * @Assert\Length(
      *     max = 255
@@ -93,7 +93,7 @@ class Payment
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private  $resource;
+    private $resource;
 
     /**
      * @var string The name of this Course.
@@ -107,7 +107,7 @@ class Payment
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
-    private  $name;
+    private $name;
 
     /**
      * @var string The description of this Course.
@@ -120,10 +120,10 @@ class Payment
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private  $description;
+    private $description;
 
     /**
-     * @var integer money added to the acount as an integer e.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points
+     * @var int money added to the acount as an integer e.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points
      *
      * @example 100
      *
@@ -133,7 +133,7 @@ class Payment
     private $debit;
 
     /**
-     * @var integer money subtrated from the acount as an integere.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points
+     * @var int money subtrated from the acount as an integere.g. 1 euro = 1.00 = 100. This prevents storing of and calulating with decimal points
      *
      * @example 100
      *
@@ -143,7 +143,7 @@ class Payment
     private $credit;
 
     /**
-     * @var  The moment this request was created by the submitter
+     * @var The moment this request was created by the submitter
      *
      * @Groups({"read"})
      * @Gedmo\Timestampable(on="create")
@@ -152,13 +152,13 @@ class Payment
     private $dateCreated;
 
     /**
-     * @var  The moment this request was modified by the submitter
+     * @var The moment this request was modified by the submitter
      *
      * @Groups({"read"})
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private  $dateModified;
+    private $dateModified;
 
     public function getId(): ?Uuid
     {
