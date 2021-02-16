@@ -4361,7 +4361,7 @@ components:
   schemas:
     Acount-read:
       type: object
-      description: 'An acount e.g. bank acount that holds payments and provides a balance'
+      description: 'An acount e.g. bank acount that holds payments and provides a balance.'
       properties:
         id:
           readOnly: true
@@ -4414,7 +4414,7 @@ components:
         - name
     Acount-write:
       type: object
-      description: 'An acount e.g. bank acount that holds payments and provides a balance'
+      description: 'An acount e.g. bank acount that holds payments and provides a balance.'
       required:
         - resource
         - reference
@@ -4447,7 +4447,7 @@ components:
           nullable: true
     'Acount:jsonld-read':
       type: object
-      description: 'An acount e.g. bank acount that holds payments and provides a balance'
+      description: 'An acount e.g. bank acount that holds payments and provides a balance.'
       properties:
         '@context':
           readOnly: true
@@ -4509,7 +4509,7 @@ components:
         - name
     'Acount:jsonld-write':
       type: object
-      description: 'An acount e.g. bank acount that holds payments and provides a balance'
+      description: 'An acount e.g. bank acount that holds payments and provides a balance.'
       required:
         - resource
         - reference
@@ -4941,7 +4941,7 @@ components:
           type: string
     Payment-read:
       type: object
-      description: 'Paymments reprecent iether incomming or outgooing transfers of money to and from an acount'
+      description: 'Paymments reprecent iether incomming or outgooing transfers of money to and from an acount.'
       properties:
         id:
           readOnly: true
@@ -4987,7 +4987,7 @@ components:
         - name
     Payment-write:
       type: object
-      description: 'Paymments reprecent iether incomming or outgooing transfers of money to and from an acount'
+      description: 'Paymments reprecent iether incomming or outgooing transfers of money to and from an acount.'
       properties:
         acount:
           $ref: '#/components/schemas/Acount-write'
@@ -5016,7 +5016,7 @@ components:
         - name
     'Payment:jsonld-read':
       type: object
-      description: 'Paymments reprecent iether incomming or outgooing transfers of money to and from an acount'
+      description: 'Paymments reprecent iether incomming or outgooing transfers of money to and from an acount.'
       properties:
         '@context':
           readOnly: true
@@ -5071,7 +5071,7 @@ components:
         - name
     'Payment:jsonld-write':
       type: object
-      description: 'Paymments reprecent iether incomming or outgooing transfers of money to and from an acount'
+      description: 'Paymments reprecent iether incomming or outgooing transfers of money to and from an acount.'
       properties:
         '@context':
           readOnly: true
@@ -5368,12 +5368,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-12-01 14:49:58'
+        example: '2021-02-16 22:11:35'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-12-01 14:49:58'
+        example: '2021-02-16 22:11:35'
     required: []
   AuditTrail-write:
     properties:
@@ -5421,12 +5421,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-12-01 14:49:58'
+        example: '2021-02-16 22:11:35'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-12-01 14:49:58'
+        example: '2021-02-16 22:11:35'
     required: []
   ChangeLog-write:
     properties:
@@ -5440,13 +5440,13 @@ tags:
   -
     name: Acount
     description: |
-      An acount e.g. bank acount that holds payments and provides a balance
+      An acount e.g. bank acount that holds payments and provides a balance.
       
       
   -
     name: Payment
     description: |
-      Paymments reprecent iether incomming or outgooing transfers of money to and from an acount
+      Paymments reprecent iether incomming or outgooing transfers of money to and from an acount.
       
       
   -
