@@ -1,13 +1,13 @@
 publiccodeYmlVersion: "0.2"
 
-name: bare
+name: balance-registration
 applicationSuite: commonground
 url: "https://github.com/ConductionNL/balance-registration"
 landingURL: "pc.zaakonline.nl"
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git"
 softwareVersion: "V1.0"
-releaseDate: "2021-17-02"
-logo: pc.zaakonline.nl
+releaseDate: "2021-18-02"
+logo: https://conductionnl.github.io/images/conduction_avatar_blue_on_transparant.svg
 monochromeLogo: img/logo-mono.svg
 
 inputTypes:

@@ -4,15 +4,15 @@
 
 settings:
   registryBase: docker.io/conduction
-  projectName: bare
-  name: bare
+  projectName: balance-registration
+  name: balance-registration
   version: V1.0
   description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
   repro: https://github.com/ConductionNL/balance-registration
   demo: pc.zaakonline.nl
   domain: conduction.nl
-  subdomain: bare
-  subpath: bare
+  subdomain: balance-registration
+  subpath: balance-registration
   subpathRouting: true
   env: dev
   web: false

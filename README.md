@@ -1,4 +1,4 @@
-# bare
+# balance-registration
 
 Description
 ----
