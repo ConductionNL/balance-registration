@@ -3,10 +3,10 @@ entries:
   balance-registration:
   - apiVersion: v1
     appVersion: V1.0
-    created: "2021-02-18T21:16:05.3580625Z"
+    created: "2021-02-22T07:42:53.8003836Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
-    digest: 4e279b2504ad9a307d596cde5fb0d58d508f0e5a10880254fd0aa16049776e00
+    digest: 84bd59b21beedd8fe7f6afea56975212d027b9251f243dae9665f1f8f08019f0
     home: https://www.conduction.nl
     icon: https://conductionnl.github.io/images/conduction_avatar_blue_on_transparant.svg
     keywords:
@@ -29,7 +29,7 @@ entries:
   postgresql:
   - apiVersion: v1
     appVersion: 11.7.0
-    created: "2021-02-18T21:16:05.3660067Z"
+    created: "2021-02-22T07:42:53.8170367Z"
     deprecated: true
     description: DEPRECATED Chart for PostgreSQL, an object-relational database management
       system (ORDBMS) with an emphasis on extensibility and on standards-compliance.
@@ -49,4 +49,4 @@ entries:
     urls:
     - charts/postgresql-8.6.4.tgz
     version: 8.6.4
-generated: "2021-02-18T21:16:05.3502953Z"
+generated: "2021-02-22T07:42:53.7811757Z"
